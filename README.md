@@ -1,4 +1,4 @@
-# Ansible Role : Update Packages
+# Ansible Role : update_pkgs
 
 This role updates all installed packages to the latest versions. Dependencies are also installed if requried.
 
