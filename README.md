@@ -20,7 +20,7 @@ None
       vars_files:
         - vars/main.yml
       roles:
-        - glillico.auto_pkg_updates
+        - glillico.update_pkgs
 
 ## License
 
