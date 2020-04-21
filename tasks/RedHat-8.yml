@@ -1,5 +1,5 @@
 ---
-# RedHat 7 tasks file for update_pkgs
+# RedHat 8 tasks file for update_pkgs
 
 - name: Update all packages to the latest version
   dnf:
