@@ -10,7 +10,7 @@ None
 
 None
 
-##Dependencies
+## Dependencies
 
 None
 
@@ -26,6 +26,6 @@ None
 
 MIT
 
-## Author Information
+## Author Information
 
 This role was created in 2020 by Graham Lillico.
