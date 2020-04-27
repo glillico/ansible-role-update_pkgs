@@ -1,14 +1,11 @@
 ---
 # Debian tasks file for update_pkgs
 
-- name: Update package cache.
-  apt:
-    update_cache: yes
-    cache_valid_time: 3600
-    
 - name: Update all packages to the latest version
   apt:
     upgrade: dist
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: Remove packages that are nolonger required from the cache
   apt:
