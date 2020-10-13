@@ -1,5 +1,7 @@
 # Ansible Role : update_pkgs
 
+[![Build Status](https://github.com/glillico/ansible-role-update_pkgs/workflows/build/badge.svg)](https://github.com/glillico/ansible-role-update_pkgs/actions?query=workflow%3Abuild)
+
 This role updates all installed packages to the latest versions. Dependencies are also installed if requried.
 
 ## Requirements
