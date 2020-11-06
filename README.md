@@ -1,6 +1,6 @@
 # Ansible Role : update_pkgs
 
-[![molecule](https://github.com/glillico/ansible-role-update_pkgs/workflows/molecule/badge.svg)](https://github.com/glillico/ansible-role-update_pkgs/actions?query=workflow%3Amolecule)
+[![CI](https://github.com/glillico/ansible-role-update_pkgs/workflows/CI/badge.svg)](https://github.com/glillico/ansible-role-update_pkgs/actions?query=workflow%3ACI)
 
 This role updates all installed packages to the latest versions. Dependencies are also installed if requried.
 
