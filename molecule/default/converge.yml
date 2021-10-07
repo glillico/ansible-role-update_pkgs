@@ -1,7 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  tasks:
-    - name: "Include ansible-role-update_pkgs"
-      include_role:
-        name: "ansible-role-update_pkgs"
+
+  roles:
+    - role: glillico.update_pkgs
