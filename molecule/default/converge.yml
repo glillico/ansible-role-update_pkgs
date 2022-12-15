@@ -2,5 +2,8 @@
 - name: Converge
   hosts: all
 
+  vars:
+    upk_server_reboot: false
+
   roles:
     - role: glillico.update_pkgs
