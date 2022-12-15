@@ -1,12 +1,37 @@
 ---
-# RedHat 7 tasks file for update_pkgs
+- name: Install prerequisite package.
+  ansible.builtin.yum:
+    name: yum-utils
+    state: latest
+    update_cache: true
 
-- name: Update all packages to the latest version
-  yum:
+- name: Perform an upgrade of all packages.
+  ansible.builtin.yum:
     name: '*'
     state: latest
-    update_cache: yes
+    update_cache: true
 
-- name: Remove package dependencies that are no longer required
-  yum:
-    autoremove: yes
+- block:
+  - name: Check if a reboot is required.
+    ansible.builtin.command:
+      cmd: "/usr/bin/needs-restarting -r"
+    changed_when: false
+    failed_when: reboot_required.rc != 0 and reboot_required.rc != 1
+    check_mode: false
+    register: reboot_required
+
+  # - name: Report reboot_required
+  #   debug:
+  #     msg: "{{  reboot_required.rc | bool }} "
+  #   changed_when: reboot_required.rc == 1
+  #   check_mode: false
+
+  - name: Reboot the server (if required).
+    ansible.builtin.reboot:
+    when: reboot_required.rc == 1
+
+  when: upk_server_reboot | bool
+
+- name: Remove dependencies that are no longer required.
+  ansible.builtin.yum:
+    autoremove: true
