@@ -1,16 +1,32 @@
 ---
-# Debian tasks file for update_pkgs
-
-- name: Update all packages to the latest version
-  apt:
+- name: Perform a dist-upgrade.
+  ansible.builtin.apt:
     upgrade: dist
-    update_cache: yes
-    cache_valid_time: 3600
+    update_cache: true
 
-- name: Remove packages that are nolonger required from the cache
-  apt:
-    autoclean: yes
+- block:
+  - name: Check if a reboot is required.
+    ansible.builtin.stat:
+      path: /var/run/reboot-required
+      get_md5: false
+    register: reboot_required_file
 
-- name: Remove package dependencies that are no longer required
-  apt:
-    autoremove: yes
+  # - name: Report reboot_required
+  #   debug:
+  #     msg: "{{  reboot_required_file.stat.exists | bool }} "
+  #   changed_when: reboot_required_file.stat.exists == false
+  #   check_mode: false
+
+  - name: Reboot the server (if required).
+    ansible.builtin.reboot:
+    when: reboot_required_file.stat.exists == true
+
+  when: upk_server_reboot | bool
+
+- name: Remove packages that are no longer required from the cache.
+  ansible.builtin.apt:
+    autoclean: true
+
+- name: Remove package dependencies that are no longer required.
+  ansible.builtin.apt:
+    autoremove: true

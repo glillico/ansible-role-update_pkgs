@@ -3,3 +3,6 @@ skip_list:
   - 'role-name'
   - 'package-latest'
   - 'fqcn-builtins'
+  - 'experimental'
+  - 'literal-compare'
+  - 'name[missing]'

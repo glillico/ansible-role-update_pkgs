@@ -10,7 +10,9 @@ None
 
 ## Role Variables
 
-None
+|Variable|Description|
+|---|:---|
+|upk_server_reboot|If set to `true` a reboot check will be carried out, if one is requried it will be performed.|
 
 ## Dependencies
 
