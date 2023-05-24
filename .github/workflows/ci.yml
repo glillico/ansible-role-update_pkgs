@@ -46,7 +46,7 @@ jobs:
           - amazonlinux2
           - centos7
           - rockylinux8
-          - debian9
+          - rockylinux9
           - debian10
           - debian11
           - ubuntu1804
