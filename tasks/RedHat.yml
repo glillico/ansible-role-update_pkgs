@@ -22,7 +22,7 @@
 
   # - name: Report reboot_required
   #   debug:
-  #     msg: "{{  reboot_required.rc | bool }} "
+  #     msg: "{{ reboot_required.rc | bool }} "
   #   changed_when: reboot_required.rc == 1
   #   check_mode: false
 
