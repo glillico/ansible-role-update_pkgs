@@ -1,0 +1,33 @@
+---
+- name: Install prerequisite package.
+  community.general.zypper:
+    name: lsof
+    state: latest
+    update_cache: true
+
+- name: Perform an upgrade of all packages.
+  community.general.zypper:
+    name: '*'
+    state: latest
+    update_cache: true
+
+- block:
+  - name: Check if a reboot is required.
+    ansible.builtin.command:
+      cmd: "/usr/bin/zypper ps -s"
+    changed_when: false
+    failed_when: reboot_required.rc != 0 and reboot_required.rc != 1
+    check_mode: false
+    register: reboot_required
+
+  # - name: Report reboot_required
+  #   debug:
+  #     msg: "{{ reboot_required.rc | bool }} "
+  #   changed_when: reboot_required.rc == 1
+  #   check_mode: false
+
+  - name: Reboot the server (if required).
+    ansible.builtin.reboot:
+    when: reboot_required.rc == 1
+
+  when: upk_server_reboot | bool
