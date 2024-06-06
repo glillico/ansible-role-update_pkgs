@@ -59,7 +59,10 @@ jobs:
           python-version: '3.x'
 
       - name: Install package dependencies.
-        run: pip3 install "ansible<10" "ansible-core<2.17" docker molecule "molecule-plugins[docker]"
+        run: pip3 install "ansible-core<2.17" docker molecule "molecule-plugins[docker]"
+
+      - name: Ensure ansible collection community.general is installed.
+        run: ansible-galaxy collection install community.general --upgrade
 
       - name: Perform molecule tests.
         run: molecule test
