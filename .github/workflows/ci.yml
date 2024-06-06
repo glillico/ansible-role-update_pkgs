@@ -44,6 +44,7 @@ jobs:
       matrix:
         distro:
           - rockylinux8
+          - opensuseleap
         tag:
           - latest
     steps:
@@ -78,7 +79,6 @@ jobs:
         distro:
           - debian11
           - debian12
-          - opensuseleap
           - opensusetumbleweed
           - rockylinux9
           - ubuntu2204
