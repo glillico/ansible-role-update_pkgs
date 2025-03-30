@@ -4,24 +4,21 @@
     upgrade: dist
     update_cache: true
 
-- block:
-  - name: Check if a reboot is required.
-    ansible.builtin.stat:
-      path: /var/run/reboot-required
-      get_checksum: false
-    register: reboot_required_file
+- name: Check if a reboot is required.
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+    get_checksum: false
+  register: reboot_required_file
 
-  # - name: Report reboot_required
-  #   debug:
-  #     msg: "{{  reboot_required_file.stat.exists | bool }} "
-  #   changed_when: reboot_required_file.stat.exists == false
-  #   check_mode: false
+- name: Report reboot_required
+  debug:
+    msg: "REBOOT REQUIRED"
+  when: reboot_required_file.stat.exists == true
 
-  - name: Reboot the server (if required).
-    ansible.builtin.reboot:
-    when: reboot_required_file.stat.exists == true
-
-  when: upk_server_reboot | bool
+- name: Reboot the server (if required).
+  ansible.builtin.reboot:
+  when: reboot_required_file.stat.exists == true and
+        upk_server_reboot | bool
 
 - name: Remove packages that are no longer required from the cache.
   ansible.builtin.apt:

@@ -11,26 +11,23 @@
     state: latest
     update_cache: true
 
-- block:
-  - name: Check if a reboot is required.
-    ansible.builtin.command:
-      cmd: "/usr/bin/needs-restarting -r"
-    changed_when: false
-    failed_when: reboot_required.rc != 0 and reboot_required.rc != 1
-    check_mode: false
-    register: reboot_required
+- name: Check if a reboot is required.
+  ansible.builtin.command:
+    cmd: "/usr/bin/needs-restarting -r"
+  changed_when: false
+  failed_when: reboot_required.rc != 0 and reboot_required.rc != 1
+  check_mode: false
+  register: reboot_required
 
-  # - name: Report reboot_required
-  #   debug:
-  #     msg: "{{ reboot_required.rc | bool }} "
-  #   changed_when: reboot_required.rc == 1
-  #   check_mode: false
+- name: Report reboot_required
+  debug:
+    msg: "REBOOT REQUIRED"
+  when: reboot_required.rc == 1
 
-  - name: Reboot the server (if required).
-    ansible.builtin.reboot:
-    when: reboot_required.rc == 1
-
-  when: upk_server_reboot | bool
+- name: Reboot the server (if required).
+  ansible.builtin.reboot:
+  when: reboot_required.rc == 1 and
+        upk_server_reboot | bool
 
 - name: Remove dependencies that are no longer required.
   ansible.builtin.dnf:
